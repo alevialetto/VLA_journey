@@ -17,16 +17,18 @@
 
 
 ## Settimana 1 (7-13 nov) - Setup e basi
-- Fatto: Python + venv (3.13), Git, GitHub, repo VLA_journey con cartelle per fase,
-  quickstart NumPy, .gitignore, rimosso .vscode dal repo, attivazione venv
-  da terminale (sbloccata execution policy di PowerShell), interprete .venv in VS Code,
-  account Hugging Face e W&B (ora dentro CoreWeave Forge, piano Free/Academic),
-  progetto Claude "VLA journey" con cartella collegata
-- Capito: flusso status → add → commit → push (il commit resta in locale,
-  è il push che manda su GitHub); .gitignore blocca solo i file nuovi,
-  per quelli già tracciati serve `git rm --cached`; il venv serve solo per python/pip;
-  nel terminale i commenti vanno dopo # (le parentesi danno errore)
-- GPU: nessuna NVIDIA (Ryzen 5 3500U, grafica integrata) → CPU per le prime settimane,
-  poi Colab/Kaggle
-- Manca: esercizio classe Robot (basi Python: classi, dizionari, cicli, funzioni)
-- Dubbi: ...
+- Fatto (aggiunto): mini-corso di Python in 6 lezioni, con esercizi in
+  00_Setup/python_basi/ (01 sintassi, 02 liste e dizionari, 03 cicli, 04 funzioni,
+  05 classi, 06 import e numpy.random); celle # %% in VS Code (estensione Jupyter + ipykernel nel venv)
+- Capito (aggiunto): indici negativi e slicing (fine esclusa); b = a non copia, serve .copy();
+  `nome[...] = ...` modifica l'oggetto, `nome = ...` sposta l'etichetta; return al posto di print;
+  variabili locali nelle funzioni e nei metodi; self e attributi (self.x = parametro);
+  import e `if __name__ == "__main__"`; seme di rng per rumore riproducibile;
+  anello chiuso Giunto + ControlloreP con saturazione
+- Manca: esercizio classe Robot (in una chat nuova)
+- Da ripassare (non bloccanti):
+  - 03: bonus punto 6 con kp = 1.5 e 2.5
+  - 04: chiamate di prova per saturazione, controllo_p, statistiche, simula_p, azzera_primo
+  - 05: punto 5 (errore guidato senza self) saltato
+  - 06: verificare il punto 6 (utils.py e import); rinominare il file senza la &
+- Dubbi: non mi sono ancora molto chiari gli "rng"

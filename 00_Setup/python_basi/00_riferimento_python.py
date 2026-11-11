@@ -172,13 +172,82 @@ ang.shape                           # forma: (3,) vettore; (2,3) = 2 righe 3 col
 ang.mean()                          # METODO, con (). Equivale a np.mean(ang)
 np.linspace(0.0, 1.0, 11)           # 11 punti da 0 a 1, estremo INCLUSO (passo 0.1)
 
+
 rng = np.random.default_rng(42)     # generatore pseudocasuale con stato interno; 42 = seme
                                     # stesso seme = stessa sequenza; ogni chiamata fa avanzare lo stato.
                                     # Crealo UNA volta e passalo alle funzioni (non ricrearlo dentro)
+# np: è numpy, importato con import numpy as np. np è solo un’abbreviazione.
+
+# .random: è il modulo di numpy dedicato ai numeri casuali. Il punto vuol dire “dentro np prendi random”.
+
+# .default_rng: è la funzione che costruisce un generatore. “default” indica il tipo di generatore consigliato oggi da numpy.
+
+# (42): è l’argomento, cioè il seme (seed), la condizione iniziale dello stato del generatore. 42 è un valore a caso,
+#       qualsiasi intero va bene.
+# rng =: attacca l’etichetta rng all’oggetto che la funzione restituisce, così puoi riusarlo dopo.
+
+# In sintesi, la riga costruisce la macchina, la mette nello stato iniziale scelto dal seme e la chiama rng. 
+# Non esce ancora nessun numero.
+
+
 rng.normal(loc=0.0, scale=0.5)      # un numero da gaussiana: loc = media, scale = deviazione standard (sigma)
+
+# rng: il generatore creato prima, con il suo stato interno.
+# .normal: un metodo del generatore, cioè un comando che sa fare una cosa precisa. Qui pesca un numero da una distribuzione gaussiana. Il punto vuol dire “chiedi a rng di eseguire normal”.
+
+# loc=0.0: il centro della gaussiana, cioè la media. Con 0 i numeri escono in modo simmetrico attorno allo zero. 
+#         Il nome viene da location.
+
+# scale=0.5: la deviazione standard σ, cioè quanto i numeri si disperdono attorno alla media. Con 0.5,
+#            circa il 68% dei numeri cade tra -0.5 e +0.5. Non è la varianza: la varianza sarebbe σ² = 0.25.
+
+# Il risultato: un solo numero, per esempio 0.31 o -0.47. Non viene assegnato a niente, quindi se non lo stampi o 
+#               non lo salvi in una variabile, va perso.
+
+# Ogni volta che la esegui, il generatore avanza di un passo e dà un numero nuovo.
+# Nel tuo Robot questa riga sarà il rumore di misura: y = x + rng.normal(0, 0.5), con σ = 0.5 come “quanto è sporco il sensore”.
+
+
 rng.normal(0.0, 0.5, size=1000)     # array di 1000 campioni indipendenti
+
+# size=1000: dice quanti numeri vuoi. Senza size ne esce uno solo, con size=1000 ne escono mille in una volta.
+
+# Il risultato: un array numpy con 1000 elementi. Ognuno è un campione gaussiano indipendente dagli altri, 
+#               ciascuno preso dal generatore avanzando di un passo, quindi consuma 1000 valori della sequenza.
+
+# È equivalente a chiamare rng.normal(0.0, 0.5) mille volte in un ciclo, ma molto più veloce e comodo, 
+# perché ottieni subito un array su cui calcolare media e deviazione standard.
+# Nel controllo è una realizzazione del rumore di misura su 1000 istanti di tempo, cioè la sequenza v[0], v[1], ..., v[999]
+
+
 rng.uniform(-1.0, 1.0, size=5)      # densita' costante in [-1, 1) (1 escluso)
+
+# rng.uniform: un altro metodo del generatore. Al posto della gaussiana pesca da una distribuzione uniforme,
+#              in cui ogni valore dell’intervallo è ugualmente probabile.
+
+# -1.0, 1.0: sono gli estremi dell’intervallo, cioè minimo e massimo (in numpy si chiamano low e high). I numeri usciranno tra -1 e +1.
+
+# size=5: ne vuoi 5, quindi il risultato è un array con 5 elementi, per esempio [0.42, -0.87, 0.03, 0.65, -0.21].
+
+# “1 escluso”: l’intervallo è semiaperto, [-1, 1). Il -1 può uscire e l’1 no. In pratica non cambia nulla, ma è la definizione esatta.
+
+
 np.mean(rng.normal(0, 0.5, 1000))   # media dei campioni: ~0 (non esatta: campione finito)
+
+# rng.normal(0, 0.5, 1000) viene eseguita per prima: produce un array di 1000 campioni gaussiani con media 0 e σ = 0.5.
+
+# np.mean( ... ) prende quell’array e calcola la media aritmetica: somma tutti gli elementi e divide per 1000.
+
+# Il risultato è un solo numero.
+
+
 np.std(rng.normal(0, 0.5, 1000))    # deviazione standard dei campioni: ~0.5 (stesse unita' dei dati)
+
+# rng.normal(0, 0.5, 1000): 1000 campioni gaussiani con media 0 e σ = 0.5.
+
+# np.std( ... ): calcola la deviazione standard dei campioni.
+#                Misura quanto i valori si disperdono attorno alla loro media: per ogni elemento prende lo scarto dalla media.
+
+
 def misura_rumorosa(valore_vero, sigma, rng):
     return valore_vero + rng.normal(loc=0.0, scale=sigma)   # modello sensore: y = y_vero + v
