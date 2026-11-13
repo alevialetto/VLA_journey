@@ -25,10 +25,18 @@
   variabili locali nelle funzioni e nei metodi; self e attributi (self.x = parametro);
   import e `if __name__ == "__main__"`; seme di rng per rumore riproducibile;
   anello chiuso Giunto + ControlloreP con saturazione
-- Manca: esercizio classe Robot (in una chat nuova)
 - Da ripassare (non bloccanti):
   - 03: bonus punto 6 con kp = 1.5 e 2.5
   - 04: chiamate di prova per saturazione, controllo_p, statistiche, simula_p, azzera_primo
   - 05: punto 5 (errore guidato senza self) saltato
   - 06: verificare il punto 6 (utils.py e import); rinominare il file senza la &
-- Dubbi: non mi sono ancora molto chiari gli "rng"
+- Fatto (aggiunto): esercizio finale classe Robot in 00_Setup/esercizio_robot.py:
+  Robot (nome, n_giunti, seed; q come dizionario), stato(), misura(sigma),
+  passo(riferimenti, kp, sigma, dt), funzioni simula() ed estrai(), errore a regime
+  e deviazione standard sugli ultimi 50 campioni
+- Capito (aggiunto): rng ha uno stato interno (il seme è la condizione iniziale) e
+  .normal() è la distribuzione da cui pesca; return self.q senza .copy() espone lo
+  stato interno (traiettoria con stati tutti uguali); metodo (self) contro funzione
+  normale (riceve l'oggetto come argomento); dt = passo di Eulero (q += u*dt),
+  polo 1 - kp*dt; l'anello chiuso filtra il rumore del sensore (std a regime < sigma)
+- Dubbi: deviazione standard teorica (circa 0.011) contro quella misurata (0.0064) con soli 50 campioni

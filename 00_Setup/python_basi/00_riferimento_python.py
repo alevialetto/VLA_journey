@@ -62,23 +62,31 @@ sensori[1]["nome"]          # prima indice della lista, poi chiave
 # ===================== LEZIONE 3 - CICLI =====================
 for ang in q:               # scorre gli ELEMENTI
     print(ang)
+
 for k in range(5):          # 0..4 (fine esclusa, solo interi)
     t = k * 0.1             # tempo campionato: k*dt, non sommare dt
+
 for i, ang in enumerate(q): # indice e valore insieme
     print(i, ang)
+
 for chiave in pid:          # chiavi del dizionario
     print(chiave)
+
 for chiave, val in pid.items():  # chiavi e valori
     print(chiave, val)
+
 for s in sensori:
     if s["valore"] < 0:
         continue            # salta al giro dopo
     if s["valore"] > 100:
         break               # esce dal ciclo
+
 xx, sp, kp, passi = 0.0, 10.0, 0.5, 0
+
 while abs(sp - xx) > 0.01 and passi < 100:  # abs + limite passi
     xx = xx + kp * (sp - xx)                # P discreto: e[k+1] = (1-kp) e[k], converge se 0<kp<2
     passi += 1
+    
 while True:                 # do-while non esiste: while True + break
     break
 
