@@ -40,3 +40,11 @@
   normale (riceve l'oggetto come argomento); dt = passo di Eulero (q += u*dt),
   polo 1 - kp*dt; l'anello chiuso filtra il rumore del sensore (std a regime < sigma)
 - Dubbi: deviazione standard teorica (circa 0.011) contro quella misurata (0.0064) con soli 50 campioni
+
+## Settimana 2 (14-20 nov) - Basi di PyTorch
+- Fatto: setup PyTorch. torch 2.15.0+cpu nel venv (D:\VLA_journey\.venv, Python 3.13),
+  senza GPU; cache pip in D:\pip_cache, temp in D:\tmp (TEMP e TMP vanno reimpostati
+  in ogni nuovo terminale prima di un pip install); interprete VS Code = .venv
+- Creato: 01_Fondamenta/pytorch_basi/01_tensori.py (la cella di prova con import torch funziona)
+- Prossimo: tutorial "Learn the Basics" di PyTorch, pagina Tensors (creazione e attributi
+  shape/dtype/device), poi operazioni, indicizzazione e ponte con numpy, poi autograd
