@@ -109,3 +109,20 @@ t4 = torch.ones(3)
 n4 = t4.numpy()
 t4 = t4 + 1                              # crea un tensore nuovo e sposta l'etichetta t4
 print(f"4) t4: {t4}, n4: {n4}")
+
+# %% 
+import torch
+
+# 1
+x = torch.tensor(2.0, requires_grad=True)
+y  = x**2
+y.backward()
+print(x.grad)  # stampa: 4.0
+
+# 2
+q = torch.tensor([2.0, 3.0, 4.0], requires_grad=True)
+A = 0.9 * torch.eye(3)
+J = (A @ q).pow(2).sum()  #shape (1,3)
+
+J.backward()
+print(q.grad)
