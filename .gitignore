@@ -8,3 +8,7 @@ checkpoints/
 *.pt
 *.pth
 *.pdf
+
+# File personali (restano solo sul PC)
+PROGRESSI.md
+CLAUDE_linee_guida_instruzioni.md
