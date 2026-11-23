@@ -126,3 +126,33 @@ J = (A @ q).pow(2).sum()  #shape (1,3)
 
 J.backward()
 print(q.grad)
+
+# %% 
+import torch
+
+w = torch.tensor(3.0, requires_grad=True)
+y = w**4
+y2 = None
+
+y.backward()
+print(w.grad)                  # tensor(108.)
+print(y.requires_grad)         # True
+
+with torch.no_grad():
+    y2 = w**4
+#y2.bakcward()   de errore
+print(y2)                      # tensor(81.)
+print(y2.requires_grad)        # False
+
+# detatch
+q = torch.tensor([1.0, 2.0, 3.0], requires_grad=True)
+
+z = q.detach()
+print(z)                    # tensor([1., 2., 3.])
+print(z.requires_grad)      # False
+
+print(q)                    # tensor([50.,  2.,  3.], requires_grad=True)
+
+# clone
+c = q.clone()
+print(c)                    # tensor([1., 2., 3.], grad_fn=<CloneBackward0>)

@@ -152,3 +152,21 @@ z = y + 1
 print(x.grad_fn)   # None: x l'hai creato tu, non nasce da nessuna operazione
 print(y.grad_fn)   # <PowBackward0 ...>: y è nato da una potenza
 print(z.grad_fn)   # <AddBackward0 ...>: z è nato da una somma
+
+# % no_grad: calcola senza registrare la catena
+w = torch.tensor(2.0, requires_grad=True)   # parametro con requires_grad=True: punto di partenza della catena di derivazione
+
+y = w * 3                                   # calcolo normale: PyTorch registra il passaggio
+print(y)                                    # tensor(6., grad_fn=<MulBackward0>)  grad_fn presente = catena registrata
+print(y.requires_grad)                      # True
+
+with torch.no_grad():                       # no_grad: le righe indentate qui sotto NON vengono registrate (fuori dal blocco il tracciamento riparte)
+    y2 = w * 3                              # stesso calcolo, stesso valore, ma senza catena
+print(y2)                                   # tensor(6.)  nessun grad_fn: il valore non cambia, cambia solo la registrazione
+print(y2.requires_grad)                     # False
+print(y2.grad_fn)                           # None
+
+y.backward()                                # funziona: la catena c'è
+print(w.grad)                               # tensor(3.)  = d(w*3)/dw
+# y2.backward()                             # RuntimeError: y2 non ha catena, non c'è da dove risalire
+
